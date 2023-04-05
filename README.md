@@ -1,42 +1,20 @@
-# Load testing homework:
+# Queue benchmark homework:
 
 ## To launch run: 
 - `docker-compose up --build`
-- `siege -f urls.txt -c${CONCURRENCY} -t1m`
-
-
+- `siege -b -t1m -c50 'http://127.0.0.1:9000/produce'`
+### To chose queue type and consumer number edit .env file
 ## Results Table
+### Single consumer
+| concurrency | redis   | redis rdb | redis aof | beanstalkd | beanstalkd persist |
+|-------------|---------|-----------|-----------|------------|--------------------|
+| 50          | 411/266 | 431/278   | 423/219   | 425/298    | 417/210            |
+| 100         | 785/215 | 786/220   | 769/161   | 752/277    | 675/192            | 
+| 300         | 1881/79 | 1845/79   | 1716/57   | 1457/315   | 905/315            | 
+### 8 consumers (1 consumer per cpu)
 
-### *Probabilistic cache*:
-```
-Transactions:                5154153 hits
-Availability:                 100.00 %
-Elapsed time:                 600.71 secs
-Data transferred:            2369.33 MB
-Response time:                  0.01 secs
-Transaction rate:            8580.10 trans/sec
-Throughput:                     3.94 MB/sec
-Concurrency:                   98.95
-Successful transactions:     5154408
-Failed transactions:               0
-Longest transaction:            3.26
-Shortest transaction:           0.00
-```
-
-## Ordinary cache
-```
-Lifting the server siege...
-Transactions:                2474214 hits
-Availability:                 100.00 %
-Elapsed time:                 600.16 secs
-Data transferred:            1137.32 MB
-Response time:                  0.04 secs
-Transaction rate:            4122.59 trans/sec
-Throughput:                     1.90 MB/sec
-Concurrency:                  181.03
-Successful transactions:     2474214
-Failed transactions:               0
-Longest transaction:          304.96
-Shortest transaction:           0.00
-
-```
+| concurrency | redis    | redis rdb | redis aof | beanstalkd | beanstalkd persist |
+|-------------|----------|-----------|-----------|------------|--------------------|
+| 50          | 404/404  | 396/396   | 404/404   | 440/440    | 414/414            |
+| 100         | 740/740  | 736/736   | 707/706   | 728/728    | 591/530            |
+| 300         | 1608/465 | 1552/455  | 1578/373  | 1226/1001  | 705/673            |

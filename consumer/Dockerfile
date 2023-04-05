@@ -9,5 +9,6 @@ RUN go build -o /main
 
 FROM alpine:3.17.2 as runtime
 COPY --from=base /main /
+RUN mkdir data
 CMD [ "/main" ]
 

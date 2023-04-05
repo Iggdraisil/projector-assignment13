@@ -3,9 +3,8 @@ module loader
 go 1.20
 
 require (
+	github.com/beanstalkd/go-beanstalk v0.2.0
 	github.com/gin-gonic/gin v1.9.0
-	github.com/go-faker/faker/v4 v4.1.0
-	github.com/lib/pq v1.10.7
 	github.com/redis/go-redis/v9 v9.0.2
 )
 
